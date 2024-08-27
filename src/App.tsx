@@ -75,13 +75,14 @@ const App: Component = () => {
       })}
     >
       <div
+        data-display={oneDisplay()}
         class={css({
           backgroundColor: "blue.400",
-          gridRow: {
-            _portrait: {
-              base: oneDisplay() === "full" ? "1 / 3" : "1 / 2",
-            },
-            _landscape: { base: oneDisplay() === "full" ? "1 / 3" : "1 / 2" },
+          "&[data-display=closed]": {
+            gridRow: "1 / 2",
+          },
+          "&[data-display=full]": {
+            gridRow: "1 / 3",
           },
           gridColumn: { base: "1 / 1" },
           padding: "1",
@@ -122,22 +123,28 @@ const App: Component = () => {
         </div>
       </div>
       <div
+        data-display={twoDisplay()}
         onClick={cycleTwoDisplay}
         class={css({
-          backgroundColor: "red.400",
-          gridRow: {
-            _portrait: {
-              base:
-                twoDisplay() === "closed"
-                  ? "-1 / -2"
-                  : twoDisplay() === "half"
-                    ? "-1 / -3"
-                    : "-1 / -6",
-            },
-            _landscape: {
-              base: twoDisplay() === "closed" ? "1 / 2" : "1 / 3",
+          "&[data-display=closed]": {
+            gridRow: {
+              _portrait: "-1 / -2",
+              _landscape: "1 / 2",
             },
           },
+          "&[data-display=half]": {
+            gridRow: {
+              _portrait: "-1 / -3",
+              _landscape: "1 / 3",
+            },
+          },
+          "&[data-display=full]": {
+            gridRow: {
+              _portrait: "-1 / -6",
+              _landscape: "1 / 3",
+            },
+          },
+          backgroundColor: "red.400",
           gridColumn: {
             _portrait: {
               base: "1 / 1",
