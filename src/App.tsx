@@ -37,7 +37,7 @@ const App: Component = () => {
   const cycleTwoDisplay = () => {
     switch (twoDisplay()) {
       case "closed":
-        setTwoDisplay("half")
+        setTwoDisplay("half");
         break;
       case "half":
         isLandscape() ? setTwoDisplay("closed") : setTwoDisplay("full");
@@ -59,17 +59,14 @@ const App: Component = () => {
         gridTemplateRows: {
           _portrait: {
             base: "5vh 25vh 30vh 35vh 5vh",
-            md: "repeat(3, 33.33vh)",
           },
           _landscape: {
             base: "10vh 80vh 10vh",
-            md: "repeat(3, 33.33vh)",
           },
         },
         gridTemplateColumns: {
           _portrait: {
             base: "100vw",
-            md: "repeat(3, 33.33vw)",
           },
           _landscape: {
             base: "repeat(3, 33.33vw)",
@@ -83,15 +80,15 @@ const App: Component = () => {
           gridRow: {
             _portrait: {
               base: `1 / ${oneDisplay() === "full" ? "3" : "2"}`,
-              md: "1 / 1",
             },
-            _landscape: { base: `1 / ${oneDisplay() === "full" ? "3" : "2"}`, md: "1 / 2" },
+            _landscape: { base: `1 / ${oneDisplay() === "full" ? "3" : "2"}` },
           },
           gridColumn: { base: "1 / 1" },
           padding: "1",
           margin: "1",
           overflow: "hidden",
           borderRadius: "sm",
+          height:  `${oneDisplay() === "full" ? "min-content" : "100%"}`,
         })}
       >
         <div
@@ -130,17 +127,14 @@ const App: Component = () => {
           gridRow: {
             _portrait: {
               base: `-1 / ${twoDisplay() === "closed" ? "-2" : twoDisplay() === "half" ? "-3" : "-6"}`,
-              md: "2 / 2",
             },
             _landscape: {
               base: `1 / ${twoDisplay() === "closed" ? "2" : "3"}`,
-              md: "2 / 2",
             },
           },
           gridColumn: {
             _portrait: {
               base: "1 / 1",
-              md: "2 / 2",
             },
             _landscape: {
               base: "3 / 3",
@@ -184,13 +178,12 @@ const App: Component = () => {
         class={css({
           backgroundColor: "yellow.400",
           gridRow: {
-            _portrait: { base: "4 / 4", md: " 3 / 3" },
+            _portrait: { base: "4 / 4" },
             _landscape: { base: "3 / 3" },
           },
           gridColumn: {
             _portrait: {
               base: "1 / 1",
-              md: "3 / 3",
             },
             _landscape: {
               base: "3 / 3",
