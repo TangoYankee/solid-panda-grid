@@ -19,6 +19,7 @@
     "vite-plugin-solid": "^2.8.2"
   },
   "dependencies": {
+    "@solid-primitives/media": "^2.2.9",
     "solid-js": "^1.8.11"
   }
 }

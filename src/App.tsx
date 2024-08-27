@@ -1,7 +1,55 @@
-import type { Component } from "solid-js";
+import { createSignal, onCleanup, type Component } from "solid-js";
+import {
+  createMediaQuery,
+  makeMediaQueryListener,
+} from "@solid-primitives/media";
 import { css } from "../styled-system/css";
 
+export type Display = "closed" | "half" | "full";
 const App: Component = () => {
+  const [isLandscape, setIsLandscape] = createSignal<boolean>(
+    createMediaQuery("(orientation: landscape)")(),
+  );
+
+  const clearLandscapeListener = makeMediaQueryListener(
+    "(orientation: landscape)",
+    (e) => {
+      setIsLandscape(e.matches);
+    },
+  );
+
+  onCleanup(clearLandscapeListener);
+
+  const [oneDisplay, setOneDisplay] = createSignal<Display>("full");
+  const [twoDisplay, setTwoDisplay] = createSignal<Display>("half");
+
+  const cycleOneDisplay = () => {
+    if (oneDisplay() === "closed" || oneDisplay() === "half") {
+      setOneDisplay("full");
+      return;
+    }
+    if (oneDisplay() === "full") {
+      setOneDisplay("closed");
+      return;
+    }
+  };
+
+  const cycleTwoDisplay = () => {
+    switch (twoDisplay()) {
+      case "closed":
+        setTwoDisplay("half")
+        break;
+      case "half":
+        isLandscape() ? setTwoDisplay("closed") : setTwoDisplay("full");
+        break;
+      case "full":
+        setTwoDisplay("closed");
+        break;
+      default:
+        throw new Error(`Invalid two display state: ${twoDisplay()}`);
+    }
+  };
+
   return (
     <div
       class={css({
@@ -10,34 +58,44 @@ const App: Component = () => {
         display: "grid",
         gridTemplateRows: {
           _portrait: {
-            base:  "30vh 30vh 30vh 10vh",
-            md:   "repeat(3, 33.33vh)"
+            base: "5vh 25vh 30vh 35vh 5vh",
+            md: "repeat(3, 33.33vh)",
           },
           _landscape: {
-            base:  "45vh 45vh 10vh",
-            md:   "repeat(3, 33.33vh)"
-          }
+            base: "10vh 80vh 10vh",
+            md: "repeat(3, 33.33vh)",
+          },
         },
         gridTemplateColumns: {
           _portrait: {
             base: "100vw",
-            md: "repeat(3, 33.33vw)"
+            md: "repeat(3, 33.33vw)",
           },
           _landscape: {
-            base: "repeat(3, 33.33vw)" 
-          }
+            base: "repeat(3, 33.33vw)",
+          },
         },
       })}
     >
       <div
         class={css({
           backgroundColor: "blue.400",
-          gridRow: { base: "1 / 1" },
+          gridRow: {
+            _portrait: {
+              base: `1 / ${oneDisplay() === "full" ? "3" : "2"}`,
+              md: "1 / 1",
+            },
+            _landscape: { base: `1 / ${oneDisplay() === "full" ? "3" : "2"}`, md: "1 / 2" },
+          },
           gridColumn: { base: "1 / 1" },
-          padding: "3",
+          padding: "1",
+          margin: "1",
+          overflow: "hidden",
+          borderRadius: "sm",
         })}
       >
         <div
+          onClick={cycleOneDisplay}
           class={css({
             display: "flex",
             flexDirection: "column",
@@ -45,6 +103,7 @@ const App: Component = () => {
           })}
         >
           <h1 class={css({ fontSize: "2xl", fontWeight: "light" })}>One</h1>
+          <h2 class={css({ color: "white" })}>State: {oneDisplay()}</h2>
           <p class={css({ overflow: "auto" })}>
             Lorem ipsum odor amet, consectetuer adipiscing elit. Ex penatibus
             efficitur quis feugiat accumsan ultrices. Id pulvinar venenatis
@@ -65,19 +124,32 @@ const App: Component = () => {
         </div>
       </div>
       <div
+        onClick={cycleTwoDisplay}
         class={css({
           backgroundColor: "red.400",
-          gridRow: { base: "2 / 2" },
+          gridRow: {
+            _portrait: {
+              base: `-1 / ${twoDisplay() === "closed" ? "-2" : twoDisplay() === "half" ? "-3" : "-6"}`,
+              md: "2 / 2",
+            },
+            _landscape: {
+              base: `1 / ${twoDisplay() === "closed" ? "2" : "3"}`,
+              md: "2 / 2",
+            },
+          },
           gridColumn: {
             _portrait: {
               base: "1 / 1",
-              md: "2 / 2"
+              md: "2 / 2",
             },
             _landscape: {
-              base: "3 / 3"
-            }
+              base: "3 / 3",
+            },
           },
-          padding: "3",
+          padding: "1",
+          margin: "1",
+          borderRadius: "sm",
+          overflow: "hidden",
         })}
       >
         <div
@@ -88,6 +160,7 @@ const App: Component = () => {
           })}
         >
           <h1 class={css({ fontSize: "2xl", fontWeight: "light" })}>Two</h1>
+          <h2 class={css({ color: "white" })}>State: {twoDisplay()}</h2>
           <p class={css({ overflow: "auto" })}>
             Lorem ipsum odor amet, consectetuer adipiscing elit. Ex penatibus
             efficitur quis feugiat accumsan ultrices. Id pulvinar venenatis
@@ -110,21 +183,27 @@ const App: Component = () => {
       <div
         class={css({
           backgroundColor: "yellow.400",
-          gridRow: { base: "3 / 3" },
+          gridRow: {
+            _portrait: { base: "4 / 4", md: " 3 / 3" },
+            _landscape: { base: "3 / 3" },
+          },
           gridColumn: {
             _portrait: {
               base: "1 / 1",
-              md: "3 / 3"
+              md: "3 / 3",
             },
             _landscape: {
-              base: "3 / 3"
-            }
+              base: "3 / 3",
+            },
           },
           height: "min-content",
           width: "min-content",
-          padding: "3",
+          padding: "1",
           justifySelf: "end",
           alignSelf: "end",
+          zIndex: "-1",
+          margin: "1",
+          borderRadius: "sm",
         })}
       >
         <h1 class={css({ fontSize: "2xl", fontWeight: "light" })}>Three</h1>
