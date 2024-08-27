@@ -79,16 +79,17 @@ const App: Component = () => {
           backgroundColor: "blue.400",
           gridRow: {
             _portrait: {
-              base: `1 / ${oneDisplay() === "full" ? "3" : "2"}`,
+              base: oneDisplay() === "full" ? "1 / 3" : "1 / 2",
             },
-            _landscape: { base: `1 / ${oneDisplay() === "full" ? "3" : "2"}` },
+            _landscape: { base: oneDisplay() === "full" ? "1 / 3" : "1 / 2" },
           },
           gridColumn: { base: "1 / 1" },
           padding: "1",
           margin: "1",
           overflow: "hidden",
           borderRadius: "sm",
-          height:  `${oneDisplay() === "full" ? "min-content" : "100%"}`,
+          height: oneDisplay() === "full" ? "min-content" : "100%",
+          maxHeight: "100%",
         })}
       >
         <div
@@ -126,10 +127,15 @@ const App: Component = () => {
           backgroundColor: "red.400",
           gridRow: {
             _portrait: {
-              base: `-1 / ${twoDisplay() === "closed" ? "-2" : twoDisplay() === "half" ? "-3" : "-6"}`,
+              base:
+                twoDisplay() === "closed"
+                  ? "-1 / -2"
+                  : twoDisplay() === "half"
+                    ? "-1 / -3"
+                    : "-1 / -6",
             },
             _landscape: {
-              base: `1 / ${twoDisplay() === "closed" ? "2" : "3"}`,
+              base: twoDisplay() === "closed" ? "1 / 2" : "1 / 3",
             },
           },
           gridColumn: {
