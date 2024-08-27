@@ -58,39 +58,40 @@ const App: Component = () => {
         display: "grid",
         gridTemplateRows: {
           _portrait: {
-            base: "5vh 25vh 30vh 35vh 5vh",
+            base: "90vh 10vh",
           },
           _landscape: {
-            base: "10vh 80vh 10vh",
+            base: "3vh 94vh 3vh",
           },
         },
         gridTemplateColumns: {
-          _portrait: {
-            base: "100vw",
-          },
-          _landscape: {
-            base: "repeat(3, 33.33vw)",
-          },
+          _portrait: "100vw",
+          _landscape: "3vw 27vw 40vw 27vw 3vw",
         },
       })}
     >
       <div
         data-display={oneDisplay()}
         class={css({
-          backgroundColor: "blue.400",
+          gridRow: {
+            _portrait: "1 / 2",
+            _landscape: "2 / 3",
+          },
+          gridColumn: {
+            _portrait: "1 / 2",
+            _landscape: "2 / 3",
+          },
           "&[data-display=closed]": {
-            gridRow: "1 / 2",
+            height: "10vh",
           },
           "&[data-display=full]": {
-            gridRow: "1 / 3",
+            height: "40vh",
           },
-          gridColumn: { base: "1 / 1" },
-          padding: "1",
-          margin: "1",
+          transition: "height 300ms ease",
+          backgroundColor: "blue.400",
+          padding: "2",
           overflow: "hidden",
           borderRadius: "sm",
-          height: oneDisplay() === "full" ? "min-content" : "100%",
-          maxHeight: "100%",
         })}
       >
         <div
@@ -126,37 +127,36 @@ const App: Component = () => {
         data-display={twoDisplay()}
         onClick={cycleTwoDisplay}
         class={css({
+          gridRow: {
+            _portrait: "1 / 3",
+            _landscape: "2 / 3",
+          },
           "&[data-display=closed]": {
-            gridRow: {
-              _portrait: "-1 / -2",
-              _landscape: "1 / 2",
-            },
+            height: "10vh",
           },
           "&[data-display=half]": {
-            gridRow: {
-              _portrait: "-1 / -3",
-              _landscape: "1 / 3",
+            _portrait: {
+              height: "40vh",
+            },
+            _landscape: {
+              height: "60vh",
             },
           },
           "&[data-display=full]": {
-            gridRow: {
-              _portrait: "-1 / -6",
-              _landscape: "1 / 3",
-            },
+            height: "100vh",
           },
-          backgroundColor: "red.400",
           gridColumn: {
-            _portrait: {
-              base: "1 / 1",
-            },
-            _landscape: {
-              base: "3 / 3",
-            },
+            _portrait: "1 / 2",
+            _landscape: "4 / 5",
           },
-          padding: "1",
-          margin: "1",
+          transition: "height 300ms ease",
+          backgroundColor: "red.400",
+          padding: "2",
           borderRadius: "sm",
-          overflow: "hidden",
+          overflow: "clip",
+          alignSelf: {
+            _portrait: "end",
+          },
         })}
       >
         <div
@@ -191,24 +191,19 @@ const App: Component = () => {
         class={css({
           backgroundColor: "yellow.400",
           gridRow: {
-            _portrait: { base: "4 / 4" },
-            _landscape: { base: "3 / 3" },
+            _portrait: "1 / 2",
+            _landscape: "2 / 3",
           },
           gridColumn: {
-            _portrait: {
-              base: "1 / 1",
-            },
-            _landscape: {
-              base: "3 / 3",
-            },
+            _portrait: "1 / 2",
+            _landscape: "4 / 5",
           },
           height: "min-content",
           width: "min-content",
-          padding: "1",
+          padding: "2",
           justifySelf: "end",
           alignSelf: "end",
           zIndex: "-1",
-          margin: "1",
           borderRadius: "sm",
         })}
       >
