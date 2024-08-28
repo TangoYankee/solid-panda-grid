@@ -71,15 +71,15 @@ const App: Component = () => {
         display: "grid",
         gridTemplateRows: {
           _portrait: {
-            base: "90vh 10vh",
+            base: "90dvh 10dvh",
           },
           _landscape: {
-            base: "3vh 94vh 3vh",
+            base: "3dvh 94dvh 3dvh",
           },
         },
         gridTemplateColumns: {
-          _portrait: "100vw",
-          _landscape: "3vw 27vw 40vw 27vw 3vw",
+          _portrait: "100dvw",
+          _landscape: "3dvw 27dvw 40dvw 27dvw 3dvw",
         },
       })}
     >
@@ -115,10 +115,10 @@ const App: Component = () => {
             display: "flex",
             flexDirection: "column",
             "&[data-display=closed]": {
-              height: "5vh",
+              height: "5dvh",
             },
             "&[data-display=full]": {
-              height: "30vh",
+              height: "30dvh",
             },
             backgroundColor: "blue.400",
             transition: "height 300ms ease",
@@ -153,14 +153,14 @@ const App: Component = () => {
             display: "flex",
             flexDirection: "column",
             "&[data-display=closed]": {
-              height: "5vh",
+              height: "5dvh",
             },
             "&[data-display=full]": {
               _portrait: {
-                height: "60vh",
+                height: "60dvh",
               },
               _landscape: {
-                height: "64vh",
+                height: "64dvh",
               },
             },
             transition: "height 300ms ease",
@@ -200,18 +200,18 @@ const App: Component = () => {
             _landscape: "2 / 3",
           },
           "&[data-display=closed]": {
-            height: "10vh",
+            height: "10dvh",
           },
           "&[data-display=half]": {
             _portrait: {
-              height: "35vh",
+              height: "35dvh",
             },
             _landscape: {
-              height: "60vh",
+              height: "60dvh",
             },
           },
           "&[data-display=full]": {
-            height: "100vh",
+            height: "100dvh",
           },
           gridColumn: {
             _portrait: "1 / 2",
