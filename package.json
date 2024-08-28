@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@solid-primitives/media": "^2.2.9",
+    "maplibre-gl": "^4.6.0",
     "solid-js": "^1.8.11"
   }
 }

@@ -4,6 +4,7 @@ import {
   makeMediaQueryListener,
 } from "@solid-primitives/media";
 import { css } from "../styled-system/css";
+import { Atlas } from "./Atlas";
 
 export type Display = "closed" | "half" | "full";
 const App: Component = () => {
@@ -70,6 +71,14 @@ const App: Component = () => {
         },
       })}
     >
+      <Atlas
+        class={css({
+          position: "static",
+          gridRow: "1 / -1",
+          gridColumn: "1 / -1",
+          zIndex: "0",
+        })}
+      />
       <div
         data-display={oneDisplay()}
         class={css({
@@ -92,6 +101,7 @@ const App: Component = () => {
           padding: "2",
           overflow: "hidden",
           borderRadius: "sm",
+          zIndex: "1",
         })}
       >
         <div
@@ -127,6 +137,7 @@ const App: Component = () => {
         data-display={twoDisplay()}
         onClick={cycleTwoDisplay}
         class={css({
+          // display: "none",
           gridRow: {
             _portrait: "1 / 3",
             _landscape: "2 / 3",
@@ -157,6 +168,7 @@ const App: Component = () => {
           alignSelf: {
             _portrait: "end",
           },
+          zIndex: "2",
         })}
       >
         <div
@@ -203,7 +215,7 @@ const App: Component = () => {
           padding: "2",
           justifySelf: "end",
           alignSelf: "end",
-          zIndex: "-1",
+          zIndex: "0",
           borderRadius: "sm",
         })}
       >
