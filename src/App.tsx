@@ -21,7 +21,8 @@ const App: Component = () => {
 
   onCleanup(clearLandscapeListener);
 
-  const [oneDisplay, setOneDisplay] = createSignal<Display>("full");
+  const [oneDisplay, setOneDisplay] = createSignal<Display>("closed");
+  const [fourDisplay, setFourDisplay] = createSignal<Display>("full");
   const [twoDisplay, setTwoDisplay] = createSignal<Display>("half");
 
   const cycleOneDisplay = () => {
@@ -31,6 +32,17 @@ const App: Component = () => {
     }
     if (oneDisplay() === "full") {
       setOneDisplay("closed");
+      return;
+    }
+  };
+
+  const cycleFourDisplay = () => {
+    if (fourDisplay() === "closed" || fourDisplay() === "half") {
+      setFourDisplay("full");
+      return;
+    }
+    if (fourDisplay() === "full") {
+      setFourDisplay("closed");
       return;
     }
   };
@@ -80,7 +92,6 @@ const App: Component = () => {
         })}
       />
       <div
-        data-display={oneDisplay()}
         class={css({
           gridRow: {
             _portrait: "1 / 2",
@@ -90,30 +101,76 @@ const App: Component = () => {
             _portrait: "1 / 2",
             _landscape: "2 / 3",
           },
-          "&[data-display=closed]": {
-            height: "10vh",
-          },
-          "&[data-display=full]": {
-            height: "40vh",
-          },
-          transition: "height 300ms ease",
-          backgroundColor: "blue.400",
-          padding: "2",
-          overflow: "hidden",
+          backgroundColor: "gray.400",
           borderRadius: "sm",
           zIndex: "1",
+          height: "fit-content",
+          maxWidth: { _landscape: "300px" },
         })}
       >
         <div
+          data-display={oneDisplay()}
           onClick={cycleOneDisplay}
           class={css({
             display: "flex",
             flexDirection: "column",
-            height: "100%",
+            "&[data-display=closed]": {
+              height: "5vh",
+            },
+            "&[data-display=full]": {
+              height: "30vh",
+            },
+            backgroundColor: "blue.400",
+            transition: "height 300ms ease",
+            padding: "2",
+            overflow: "clip",
           })}
         >
           <h1 class={css({ fontSize: "2xl", fontWeight: "light" })}>One</h1>
           <h2 class={css({ color: "white" })}>State: {oneDisplay()}</h2>
+          <p class={css({ overflow: "auto" })}>
+            Lorem ipsum odor amet, consectetuer adipiscing elit. Ex penatibus
+            efficitur quis feugiat accumsan ultrices. Id pulvinar venenatis
+            posuere aliquam maecenas velit. Cras felis viverra eu class
+            fermentum vitae torquent. Porttitor donec consequat dolor odio
+            pretium facilisi nisi. Enim ac justo erat; auctor lacus et. Tortor
+            tellus nostra convallis blandit felis vulputate. Hendrerit ridiculus
+            convallis metus vehicula ut tincidunt. Donec turpis et sociosqu,
+            torquent mattis interdum volutpat. Libero sociosqu cras convallis
+            tincidunt nulla dictum leo. Pellentesque sociosqu elementum felis
+            integer lacinia finibus. Tellus donec primis in dictum; lobortis
+            aliquam imperdiet arcu a. Et facilisi eleifend etiam nisl sociosqu.
+            Litora sem quam turpis nec ultricies himenaeos scelerisque. Nisi
+            urna ullamcorper himenaeos viverra libero. Nostra conubia dui lectus
+            accumsan nisl est mi posuere. Ullamcorper facilisis ridiculus
+            vivamus urna; metus lacus neque.
+          </p>
+        </div>
+        <div
+          data-display={fourDisplay()}
+          onClick={cycleFourDisplay}
+          class={css({
+            display: "flex",
+            flexDirection: "column",
+            "&[data-display=closed]": {
+              height: "5vh",
+            },
+            "&[data-display=full]": {
+              _portrait: {
+                height: "60vh",
+              },
+              _landscape: {
+                height: "64vh",
+              },
+            },
+            transition: "height 300ms ease",
+            backgroundColor: "blue.400",
+            padding: "2",
+            overflow: "clip",
+          })}
+        >
+          <h1 class={css({ fontSize: "2xl", fontWeight: "light" })}>Four</h1>
+          <h2 class={css({ color: "white" })}>State: {fourDisplay()}</h2>
           <p class={css({ overflow: "auto" })}>
             Lorem ipsum odor amet, consectetuer adipiscing elit. Ex penatibus
             efficitur quis feugiat accumsan ultrices. Id pulvinar venenatis
@@ -147,7 +204,7 @@ const App: Component = () => {
           },
           "&[data-display=half]": {
             _portrait: {
-              height: "40vh",
+              height: "35vh",
             },
             _landscape: {
               height: "60vh",
