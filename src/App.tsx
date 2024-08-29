@@ -164,7 +164,7 @@ const App: Component = () => {
               },
             },
             transition: "height 300ms ease",
-            backgroundColor: "blue.400",
+            backgroundColor: "green.400",
             padding: "2",
             overflow: "clip",
           })}
