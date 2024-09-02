@@ -234,7 +234,6 @@ const App: Component = () => {
       </div>
       <div
         data-display={twoDisplay()}
-        onPointerDown={cycleTwoDisplay}
         class={css({
           // display: "none",
           gridRow: {
@@ -282,8 +281,10 @@ const App: Component = () => {
             height: "100%",
           })}
         >
-          <h1 class={css({ fontSize: "2xl", fontWeight: "light" })}>Two</h1>
-          <h2 class={css({ color: "white" })}>State: {twoDisplay()}</h2>
+          <div onPointerDown={cycleTwoDisplay}>
+            <h1 class={css({ fontSize: "2xl", fontWeight: "light" })}>Two</h1>
+            <h2 class={css({ color: "white" })}>State: {twoDisplay()}</h2>
+          </div>
           <p class={css({ overflow: "auto" })}>
             Lorem ipsum odor amet, consectetuer adipiscing elit. Ex penatibus
             efficitur quis feugiat accumsan ultrices. Id pulvinar venenatis
