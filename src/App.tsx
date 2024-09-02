@@ -47,19 +47,61 @@ const App: Component = () => {
     }
   };
 
-  const cycleTwoDisplay = () => {
-    switch (twoDisplay()) {
-      case "closed":
-        setTwoDisplay("half");
-        break;
-      case "half":
-        isLandscape() ? setTwoDisplay("closed") : setTwoDisplay("full");
-        break;
-      case "full":
-        setTwoDisplay("closed");
-        break;
-      default:
-        throw new Error(`Invalid two display state: ${twoDisplay()}`);
+  const cycleTwoDisplay = (e: PointerEvent) => {
+    const { pointerType, target, clientY: initialClientY } = e;
+    if (pointerType === "mouse") {
+      switch (twoDisplay()) {
+        case "closed":
+          setTwoDisplay("half");
+          break;
+        case "half":
+          isLandscape() ? setTwoDisplay("closed") : setTwoDisplay("full");
+          break;
+        case "full":
+          setTwoDisplay("closed");
+          break;
+        default:
+          throw new Error(`Invalid two display state: ${twoDisplay()}`);
+      }
+    } else if (pointerType === "touch" && target !== null) {
+      const detectPointerDirection = (e: Event) => {
+        if ("clientY" in e === false) throw new Error();
+        const { clientY: finalClientY } = e;
+        if (typeof finalClientY !== "number") throw new Error();
+        switch (twoDisplay()) {
+          case "closed":
+            if (isLandscape() && initialClientY < finalClientY) {
+              setTwoDisplay("half");
+            } else if (!isLandscape() && initialClientY > finalClientY) {
+              setTwoDisplay("half");
+            }
+            break;
+          case "half":
+            if (isLandscape() && initialClientY > finalClientY) {
+              setTwoDisplay("closed");
+            } else if (!isLandscape()) {
+              initialClientY > finalClientY
+                ? setTwoDisplay("full")
+                : setTwoDisplay("closed");
+            }
+            break;
+          case "full":
+            if (isLandscape() && initialClientY > finalClientY) {
+              setTwoDisplay("closed");
+            } else if (!isLandscape() && initialClientY < finalClientY) {
+              setTwoDisplay("half");
+            }
+            break;
+          default:
+            throw new Error(`Invalid two display state: ${twoDisplay()}`);
+        }
+      };
+      target.addEventListener("pointermove", detectPointerDirection, {
+        once: true,
+      });
+      setTimeout(() => {
+        target.removeEventListener("pointermove", detectPointerDirection);
+      }, 300);
     }
   };
 
@@ -192,7 +234,7 @@ const App: Component = () => {
       </div>
       <div
         data-display={twoDisplay()}
-        onClick={cycleTwoDisplay}
+        onPointerDown={cycleTwoDisplay}
         class={css({
           // display: "none",
           gridRow: {
@@ -211,7 +253,12 @@ const App: Component = () => {
             },
           },
           "&[data-display=full]": {
-            height: "100dvh",
+            _portrait: {
+              height: "100dvh",
+            },
+            _landscape: {
+              height: "60dvh",
+            },
           },
           gridColumn: {
             _portrait: "1 / 2",
