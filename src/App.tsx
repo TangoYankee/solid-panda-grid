@@ -128,7 +128,10 @@ const App: Component = () => {
       <Atlas
         class={css({
           position: "static",
-          gridRow: "1 / -1",
+          gridRow: {
+            _portrait: "1 / -2",
+            _landscape: "1 / -1",
+          },
           gridColumn: "1 / -1",
           zIndex: "0",
         })}
@@ -306,25 +309,24 @@ const App: Component = () => {
       </div>
       <div
         class={css({
-          backgroundColor: "yellow.400",
+          backgroundColor: "yellow.400/40",
           gridRow: {
             _portrait: "1 / 2",
             _landscape: "2 / 3",
           },
           gridColumn: {
             _portrait: "1 / 2",
-            _landscape: "4 / 5",
+            _landscape: "2 / 3",
           },
           height: "min-content",
           width: "min-content",
           padding: "2",
-          justifySelf: "end",
           alignSelf: "end",
           zIndex: "0",
           borderRadius: "sm",
         })}
       >
-        <h1 class={css({ fontSize: "2xl", fontWeight: "light" })}>Three</h1>
+        <h1 class={css({ fontSize: "xl", fontWeight: "light" })}>Three</h1>
       </div>
     </div>
   );
