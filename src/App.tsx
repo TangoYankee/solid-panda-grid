@@ -5,6 +5,7 @@ import {
 } from "@solid-primitives/media";
 import { css } from "../styled-system/css";
 import { Atlas } from "./Atlas";
+import { DemoChild, DemoProvider } from "./Context";
 
 export type Display = "closed" | "half" | "full";
 const App: Component = () => {
@@ -327,6 +328,9 @@ const App: Component = () => {
         })}
       >
         <h1 class={css({ fontSize: "xl", fontWeight: "light" })}>Three</h1>
+        <DemoProvider>
+          <DemoChild />
+        </DemoProvider>
       </div>
     </div>
   );
