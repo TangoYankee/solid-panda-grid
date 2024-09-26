@@ -5,6 +5,7 @@ import {
 } from "@solid-primitives/media";
 import { css } from "../styled-system/css";
 import { Atlas } from "./Atlas";
+import { ResizeHandle } from "./ResizeHandle";
 
 export type Display = "closed" | "half" | "full";
 const App: Component = () => {
@@ -171,6 +172,7 @@ const App: Component = () => {
             overflow: "clip",
           })}
         >
+          <ResizeHandle />
           <h1 class={css({ fontSize: "2xl", fontWeight: "light" })}>One</h1>
           <h2 class={css({ color: "white" })}>State: {oneDisplay()}</h2>
           <p class={css({ overflow: "auto" })}>
@@ -214,6 +216,7 @@ const App: Component = () => {
             overflow: "clip",
           })}
         >
+          <ResizeHandle />
           <h1 class={css({ fontSize: "2xl", fontWeight: "light" })}>Four</h1>
           <h2 class={css({ color: "white" })}>State: {fourDisplay()}</h2>
           <p class={css({ overflow: "auto" })}>
@@ -285,6 +288,7 @@ const App: Component = () => {
           })}
         >
           <div onPointerDown={cycleTwoDisplay}>
+            <ResizeHandle />
             <h1 class={css({ fontSize: "2xl", fontWeight: "light" })}>Two</h1>
             <h2 class={css({ color: "white" })}>State: {twoDisplay()}</h2>
           </div>
