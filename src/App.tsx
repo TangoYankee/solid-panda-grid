@@ -49,6 +49,7 @@ const App: Component = () => {
   };
 
   const cycleTwoDisplay = (e: PointerEvent) => {
+    e.stopPropagation();
     const { pointerType, target, clientY: initialClientY } = e;
     if (pointerType === "mouse") {
       switch (twoDisplay()) {
